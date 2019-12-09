@@ -1,9 +1,5 @@
 package tree
 
-import (
-	"fmt"
-)
-
 // Node .
 type Node struct {
 	Name     string
@@ -17,7 +13,7 @@ type Tree struct {
 	EndNodes map[string]*Node
 }
 
-// NewTree .∂
+// NewTree .∂\
 func NewTree() *Tree {
 	t := Tree{
 		Nodes:    make(map[string]*Node),
@@ -77,7 +73,7 @@ func (t *Tree) Distance(start, end string) int {
 	var currNode *Node
 	for len(q) > 0 {
 		p, q = q[0], q[1:]
-		fmt.Printf("%v", p)
+		// fmt.Printf("%v", p)
 		curr = p.name
 		currDistance = p.distance
 		if curr == to.Name {
