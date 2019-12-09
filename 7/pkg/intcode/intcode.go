@@ -3,7 +3,6 @@ package intcode
 import (
 	"bufio"
 	"errors"
-	"fmt"
 	"os"
 	"strconv"
 	"strings"
@@ -56,7 +55,6 @@ func Run(program *Program) (*Program, error) {
 	code := program.Code
 	i := program.CurrentIndex
 	inputindex := program.InputIndex
-	output := make([]int, 0)
 	var instruction, opcode, p1, p2, index, parameter1, parameter2 int
 	for code[i] != 99 {
 		instruction = code[i]
@@ -98,15 +96,14 @@ func Run(program *Program) (*Program, error) {
 				program.Code = code
 				program.CurrentIndex = i
 				program.InputIndex = inputindex
-				program.Output = output
 				return program, nil
 			}
 			code[code[i+1]] = program.Input[inputindex]
 			inputindex++
 			i += 2
 		case 4:
-			fmt.Println("output:", code[code[i+1]])
-			output = append(output, code[code[i+1]])
+			// fmt.Println("output:", code[code[i+1]])
+			program.Output = append(program.Output, code[code[i+1]])
 			i += 2
 		case 5:
 			if parameter1 != 0 {

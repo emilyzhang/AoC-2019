@@ -10,7 +10,7 @@ func main() {
 	if err != nil {
 		fmt.Println(err)
 	}
-	fmt.Println(program.Code)
+	// fmt.Println(program.Code)
 	max, err := largestAmplifiedOutput(program)
 	if err != nil {
 		fmt.Println(err)
@@ -31,8 +31,8 @@ func main() {
 func feedbackloop(program intcode.Program, phaseSequence []int) (int, error) {
 	var err error
 	p1 := spawn(program)
-	p1.Input = append(p1.Input, 0)
 	p1.Input = append(p1.Input, phaseSequence[0])
+	p1.Input = append(p1.Input, 0)
 	p1, err = intcode.Run(p1)
 	if err != nil {
 		return 0, err
@@ -106,14 +106,13 @@ func feedbackloop(program intcode.Program, phaseSequence []int) (int, error) {
 			break
 		}
 	}
-	return p5.Output[o5], nil
+	return p5.Output[o5-1], nil
 }
 
 func runAmplifier(program *intcode.Program, prev *intcode.Program, outputIndex int) (*intcode.Program, int, error) {
 	program.Input = append(program.Input, prev.Output[outputIndex])
-	program.Input = append(program.Input, prev.Output[outputIndex])
 	p, err := intcode.Run(program)
-	return p, outputIndex + 2, err
+	return p, outputIndex + 1, err
 }
 
 func spawn(program intcode.Program) *intcode.Program {
