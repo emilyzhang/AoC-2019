@@ -47,18 +47,25 @@ type Jump struct {
 func (j Jump) isInstruction() {}
 
 type Input struct {
-	Address int
-	Next    int
+	InputAddress int
+	Next         int
 }
 
 func (i Input) isInstruction() {}
 
 type Output struct {
-	Address int
-	Next    int
+	Output int
+	Next   int
 }
 
 func (o Output) isInstruction() {}
+
+type AdjustRelativeBase struct {
+	Adjustment int
+	Next       int
+}
+
+func (a AdjustRelativeBase) isInstruction() {}
 
 type Halt struct{}
 
