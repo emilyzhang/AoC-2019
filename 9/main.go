@@ -20,7 +20,7 @@ func main() {
 			break
 		}
 		if p.RequiresInput() {
-			p.Input(1)
+			p.Input(2)
 		}
 		if p.HasOutput() {
 			fmt.Println(p.Output())

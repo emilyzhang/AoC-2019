@@ -79,11 +79,11 @@ func New(source Source) *Program {
 
 func (p *Program) Run() error {
 	for p.status == DEFAULT || p.status == HAS_INPUT {
-		i, err := p.DecodeInstruction()
+		i, err := p.decodeInstruction()
 		if err != nil {
 			return err
 		}
-		err = p.Step(i)
+		err = p.step(i)
 		if err != nil {
 			return err
 		}
@@ -101,7 +101,7 @@ func (p *Program) Output() int {
 	return p.output
 }
 
-func (p *Program) Step(instruction Instruction) error {
+func (p *Program) step(instruction Instruction) error {
 	switch instruction.(type) {
 	case Add:
 		i := instruction.(Add)
@@ -191,7 +191,7 @@ func (p *Program) provisionMemory(p1, p2, p3, p1mode, p2mode, p3mode int) {
 	}
 }
 
-func (p *Program) CalculateParameters(opcode Opcode, p1mode, p2mode, p3mode int) (p1 int, p2 int, p3 int) {
+func (p *Program) calculateParameters(opcode Opcode, p1mode, p2mode, p3mode int) (p1 int, p2 int, p3 int) {
 	p1, p2, p3 = p.state[p.pointer+1], p.state[p.pointer+2], 0
 	if opcode == 1 || opcode == 2 || opcode == 7 || opcode == 8 {
 		p3 = p.state[p.pointer+3]
@@ -251,7 +251,7 @@ func (p *Program) CalculateParameters(opcode Opcode, p1mode, p2mode, p3mode int)
 	return p1, p2, p3
 }
 
-func (p *Program) DecodeInstruction() (Instruction, error) {
+func (p *Program) decodeInstruction() (Instruction, error) {
 	instr := p.state[p.pointer]
 	opcode := Opcode(instr % 100)
 	p1mode := (instr / 100) % 10
@@ -262,7 +262,7 @@ func (p *Program) DecodeInstruction() (Instruction, error) {
 		return Halt{}, nil
 	}
 
-	p1, p2, p3 := p.CalculateParameters(opcode, p1mode, p2mode, p3mode)
+	p1, p2, p3 := p.calculateParameters(opcode, p1mode, p2mode, p3mode)
 
 	var instruction Instruction
 	switch opcode {
