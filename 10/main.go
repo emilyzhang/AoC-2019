@@ -12,6 +12,10 @@ func main() {
 		fmt.Println(err)
 	}
 
-	fmt.Println(m)
+	// fmt.Println(m.Asteroids)
+	// fmt.Println(m.MonitorMax())
+	// fmt.Println(m.MonitoringStation.X, m.MonitoringStation.Y)
+	x := m.Destroy(200)
+	fmt.Println(x.X*100 + x.Y)
 
 }
